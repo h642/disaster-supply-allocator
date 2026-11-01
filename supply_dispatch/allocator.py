@@ -38,9 +38,7 @@ def allocate_relief_supplies(zones: List[ReliefZone], total_inventory: int) -> T
         allocated = min(zone.requested_units, remaining)
         allocations[zone.zone_id] = allocated
 
-        # BUG: Arithmetic inversion! Instead of subtracting allocated supplies from
-        # remaining inventory, it adds them, violating physical conservation of inventory!
-        # Flawed line:
-        remaining = remaining + allocated
+        # Correctly decrement remaining inventory by the amount allocated
+        remaining = remaining - allocated
 
     return allocations, remaining
